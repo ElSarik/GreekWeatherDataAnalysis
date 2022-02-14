@@ -11,3 +11,20 @@ def dataset_open():
     dataset = list(csvreader)
 
     return dataset
+
+
+def dataset_split(dataset: 'list[list[str]]'):
+    '''Splits the arg using '/t' as delimiter,
+
+       arg: 2D str(list),
+       
+       Returns splitted 2D str(list).'''
+
+    data = []
+
+    #breaking the list into elements
+    for i in range(len(dataset)):
+        i = [element for line in dataset[i] for element in line.split('\t')]
+        data.append(i)
+
+    return data
