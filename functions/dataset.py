@@ -1,5 +1,7 @@
 import csv
 
+global cleaned_data
+
 def dataset_open():
     '''Opens the csv file,
     
@@ -20,6 +22,8 @@ def dataset_split(dataset: 'list[list[str]]'):
        
        Returns splitted 2D str(list).'''
 
+    global cleaned_data
+
     data = []
 
     #breaking the list into elements
@@ -27,4 +31,12 @@ def dataset_split(dataset: 'list[list[str]]'):
         i = [element for line in dataset[i] for element in line.split('\t')]
         data.append(i)
 
+    cleaned_data = data
+
     return data
+
+
+def testfunc():
+    global cleaned_data
+
+    print(cleaned_data)
