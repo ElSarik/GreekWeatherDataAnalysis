@@ -1,4 +1,4 @@
-
+import random
 # Displaying data in format: column_title = row_data
 def display_row_with_titles(data: 'list[list[str]]', row_indexes: list = [1]):
     '''Prints arg2 indexes of arg1 list together with arg1[0] titles,
@@ -17,4 +17,4 @@ def display_row_with_titles(data: 'list[list[str]]', row_indexes: list = [1]):
             print(f'{index + 1} - {column_titles[index]} = {row_data[index]}')
 
         print("============================================================")
-        
+
