@@ -63,7 +63,7 @@ def five_cities_with_lower_temperature_middleterm_in2018():
 
     #WARINGING! headers NOT included in data_in2018!!!!!
 
-
+    exceptions = []
     cities_and_temperatures__dictionary  = {}
     index = 0
     #to find middle term of termperatures in a city, we have to find middle term in 1 day, each day we have data of in 1 city,
@@ -75,7 +75,5 @@ def five_cities_with_lower_temperature_middleterm_in2018():
             cities_and_temperatures__dictionary[i[2] + " " + i[4] + "/" + i[5]] = "{:.2f}".format((float(i[6]) + float(i[7])) / 2)
             index += 1
         except:
-            continue
-        print(i)
-
-    return
+            exceptions.append(i)
+    return  cities_and_temperatures__dictionary["Επταπύργιο Θεσσαλονίκης 10/4"]
