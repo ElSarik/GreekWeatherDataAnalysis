@@ -72,8 +72,6 @@ def five_cities_with_lower_temperature_middleterm_in2018():
 
     # assinging in main list every city's middle temp term, with same index as city in cities list, so we can get
     # data from mainlist.
-
-    chain = 0
     indx = 0
     mainlist = []
     helpfullist = []
@@ -87,7 +85,7 @@ def five_cities_with_lower_temperature_middleterm_in2018():
             i7 = float(i[7])
             #   calculating middle term of each day (each row)
             helpfullist.append((i6 + i7) / 2)
-            chain += 1
+
             indx += 1
 
         #   main program
@@ -101,14 +99,14 @@ def five_cities_with_lower_temperature_middleterm_in2018():
                 if i[2] == data_in2018[indx][2]:
                     helpfullist.append((i6 + i7) / 2)
                     indx += 1
-                    chain += 1
+
 
                 else:
                     mainlist.append(sum(helpfullist) / len(helpfullist))
-                    helpfullist = helpfullist.clear()
+                    del helpfullist[:]
                     helpfullist.append((i6 + i7) / 2)
                     indx += 1
-                    chain = 0
+
 
 
 
@@ -117,6 +115,5 @@ def five_cities_with_lower_temperature_middleterm_in2018():
 
 
     return mainlist
-
 
 
