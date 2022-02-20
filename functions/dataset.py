@@ -1,7 +1,5 @@
 import csv
 
-global cleaned_data
-
 def dataset_open():
     '''Opens the csv file,
     
@@ -38,8 +36,6 @@ def dataset_split(dataset: 'list[list[str]]'):
 
 def get_cleaned_data():
     '''Returns the split data'''
-
-    global cleaned_data
 
     return cleaned_data
 
