@@ -38,9 +38,3 @@ def get_cleaned_data():
     '''Returns the split data'''
 
     return cleaned_data
-
-
-def testfunc():
-    global cleaned_data
-
-    print(cleaned_data)
