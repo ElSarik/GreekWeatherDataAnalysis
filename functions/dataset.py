@@ -20,7 +20,7 @@ def dataset_split(dataset: 'list[list[str]]'):
 
        arg: 2D str(list),
        
-       Returns splitted 2D str(list).'''
+       Returns split 2D str(list).'''
 
     global cleaned_data
 
