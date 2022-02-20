@@ -36,6 +36,14 @@ def dataset_split(dataset: 'list[list[str]]'):
     return data
 
 
+def get_cleaned_data():
+    '''Returns the split data'''
+
+    global cleaned_data
+
+    return cleaned_data
+
+
 def testfunc():
     global cleaned_data
 
