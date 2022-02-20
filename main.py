@@ -1,4 +1,4 @@
-from functions.dataset import dataset_open, dataset_split, testfunc
+from functions.dataset import dataset_open, dataset_split, get_cleaned_data
 from functions.display import display_row_with_titles
 
 dataset = dataset_open()
@@ -12,4 +12,5 @@ data = dataset_split(dataset)
 # display_row_with_titles(data)
 
 
-testfunc()
+data = get_cleaned_data()
+print(data)
