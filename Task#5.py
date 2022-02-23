@@ -1,7 +1,7 @@
 import csv
 
 # opening data
-file = open('greek_weather_data.csv', encoding = "UTF8")
+file = open('greek_weather_data.csv', encoding="UTF8")
 
 csvreader = csv.reader(file)
 dataset = list(csvreader)  # converting to list
@@ -25,7 +25,7 @@ for i in range(len(cleaned_data)):
 # Task 5
 y = 0
 result = []
-for z in range(2006, 2018):
+for z in range(2006, 2019):
     for i in range(1, len(dataClear)):
         x = dataClear[i][1]
         try:
@@ -37,5 +37,6 @@ for z in range(2006, 2018):
                 y = x
             result = y
     y = 0
-    print(result)
+    print('The highest temperature recorded in ' + str(z) + ' had a value of ' + str(result))
+
 
