@@ -2,15 +2,15 @@ import csv
 import re
 from pprint import pprint
 
-
 global cleaned_data
+
 
 def dataset_open():
     '''Opens the csv file,
     
        Returns csv content as a 2D list.'''
 
-    #reading the file
+    # reading the file
     file = open('greek_weather_data.csv', encoding="utf8")
     csvreader = csv.reader(file)
     dataset = list(csvreader)
@@ -29,7 +29,7 @@ def dataset_split(dataset: 'list[list[str]]'):
 
     data = []
 
-    #breaking the list into elements
+    # breaking the list into elements
     for i in range(len(dataset)):
         i = [element for line in dataset[i] for element in line.split('\t')]
         data.append(i)
@@ -38,94 +38,124 @@ def dataset_split(dataset: 'list[list[str]]'):
 
     return data
 
-    #    -------------vandls work-----------------------------------------------------------------------------#
+    #    -------------vandl's work-----------------------------------------------------------------------------#
 
 
+#   creating a middle term function for later use.
+def middleterm(arg):
+    num_arg = []
+    for i in arg:
+        try:
+            num_arg.append(float(i))
+        except:
+            continue
+    return (sum(num_arg) / len(num_arg))
 
-def five_cities_with_lower_temperature_middleterm_in2018():
-    #   made by vandl
-    #   each row of CSV looks like:
-    #    ['33', 'Ήπειρος', 'Αγία Κυριακή Ιωαννίνων', '2018', '11', '3', '15.6', '26.3', '13:50:00', '7.4', '06:30:00', '4.7', '1.9', '0.0', '2.7', '25.7', '13:20:00', 'E', '515.0', '"39° 31\' 27"" N"', '"20° 52\' 55"" E"', '39.524167','20.881944']
-    #   0          1           2                       3     4     5      6    7           8         9        10   .   .
-    #   MEAN_TEMP	HIGH_TEMP, indexes: 6 ,7
+
+def five_highestorlowest_temperature_cities_in2018(arguement="none"):
 
     # task #3. Να βρείτε τις 5 πόλεις/χωριά με τον υψηλότερο και χαμηλότερο μέσο όρο θερμοκρασιών για το 2018
-    #
-    #
-    #
-    #
-    # #### ΛΟΓΙΚΗ ##### ουσιαστικα κανω μια λιστα με ολες τις πολης των row του 2018, και εφοσον καθε row-μερα εχει 2
-    # θερμοκρασιες (μιν-μαξ) βρισκω τον μεσο καθε row, τον κανω append σε μια βοηθητικη λιστα, και οταν στην λουπα η
-    # πολη αλλαξει(επειδη οι πολεις ειναι στην σειρα και εγω θελω να βρω μεσο ορο πολης,) να κανει αππεντ στην μαιν
-    # λιστα τον μεσο ορο της helpful, δηλαδη τον μεσο ορο της πολης, και μετα να σβηνει οτι εχει η helpful και να
-    # αρχιζει απτην αρχη. Θεωριτικα θελω η μαιν να εχει ολους τους μεσους ορους καθε πολης ξεχωριστα, οι οποιοι θα
-    # επρεπε να ειναι 380κατι αν θυμαμαι καλα, ενω τωρα ειναι 15χιλιαδες μεσα στην μαιν καπως.γιατι με βγαζει οτι
-    # ναναι γμτπμ
-
-
 
     global cleaned_data
 
-    #   filteringdata
+    arguement = arguement.lower() # making arguement case insensitive
+
+    #   filtering data
     data_in2018 = []
+    # year_index = getindex("STATION NAME")
     for i in cleaned_data:
+        #
         if i[3] == "2018":
             data_in2018.append(i)
         else:
             continue
     #   data_in2018 now has CSV rows only from year 2018
 
-    #   WARINGING! headers NOT included in data_in2018!!!!!
+    #   headers NOT included in data_in2018!!!!!
     #   creating a list with all cities once
     cities = []
     for i in data_in2018:
         if i[2] not in cities:
             cities.append(i[2])
 
-    # assinging in main list every city's middle temp term, with same index as city in cities list, so we can get
-    # data from mainlist.
-    indx = 0
-    mainlist = []
-    helpfullist = []
-    for i in data_in2018:
-        # calculating the middle term of every city and appending it to mainlist
+    high_temp_dictionary = {}
+    low_temp_dictionary = {}
+
+    # min temp == index 9
+    # high temp == index 7
+
+    for i in cities:
+        low_temp_dictionary[i] = []
+
+    for i in cities:
+        high_temp_dictionary[i] = []
+    #   {'Αγία Κυριακή Ιωαννίνων': [], 'Άρτα': []...
+
+    # ----------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------------
+    for key in low_temp_dictionary:
+        # creating variable as already existing key's value, appending in var the items we need and then putting var
+        # back in key as value
+        for row in data_in2018:
+            if row[2] == key:
+                var = low_temp_dictionary[key]  # this is the keys value!
+                var.append(row[9])
+                low_temp_dictionary[key] = var
+
+    #   lowmiddleterm dictionary now has all low temperetures in a list as value for every key (city).
+
+    #   finding middle term of each value and putting it as the new value in dictionary, using same logic as above.
+
+    for key in low_temp_dictionary:
+        var = low_temp_dictionary[key]
+        low_temp_dictionary[key] = middleterm(var)
+
+    # same for highest temps. 110- 133 are the only lines i could find a way not to duplicate...
+
+    for key in high_temp_dictionary:
+        # creating variable as already existing key's value, appending in var the items we need and then putting var
+        # back in key as value
+        for row in data_in2018:
+            if row[2] == key:
+                var = high_temp_dictionary[key]  # this is the keys value!
+                var.append(row[7])
+                high_temp_dictionary[key] = var
+
+    # lowmiddleterm and highermiddleterm dictionaries now have all low temperetures in a list as value for every key (
+    # city).
+    # ----------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------------
+    #   finding middle term of each value and putting it as the new value in dictionary, using same logic as above.
+
+    for key in high_temp_dictionary:
+        var = high_temp_dictionary[key]
+        high_temp_dictionary[key] = middleterm(var)
 
 
-        #   using if else because the chain wont work in ONLY first index of data_in2018
-        if i == data_in2018[0]:
-            i6 = float(i[6])
-            i7 = float(i[7])
-            #   calculating middle term of each day (each row)
-            helpfullist.append((i6 + i7) / 2)
-
-            indx += 1
-
-        #   main program
-        else:
-            #   using try except because some data is missing
-            try:
-                i6 = float(i[6])
-                i7 = float(i[7])
-                #   if the nth city of data_in2018 is the SAME as previous row:
-                #   using index manually because I can't figure out how to use enumerate
-                if i[2] == data_in2018[indx][2]:
-                    helpfullist.append((i6 + i7) / 2)
-                    indx += 1
+    lowest_temperature_cities2018 = []
+    highest_temperature_cities2018 = []
 
 
-                else:
-                    mainlist.append(sum(helpfullist) / len(helpfullist))
-                    del helpfullist[:]
-                    helpfullist.append((i6 + i7) / 2)
-                    indx += 1
+    #   appending lowest and highest 5 temperature cities in list.
+    for i in range(5):  # doing a loop 5 times
+        lowest_temperature_cities2018.append(min(low_temp_dictionary))
+        low_temp_dictionary.pop(min(low_temp_dictionary))
+        highest_temperature_cities2018.append(max(high_temp_dictionary))
+        high_temp_dictionary.pop(max(high_temp_dictionary))
 
-
-
-
-            except:
-                continue
-
-
-    return mainlist
-
+    #   returning data acording to users arguement
+    if arguement == "none":
+        return "The cities with lowest temperatures in 2018 are:  " + ", ".join(
+            lowest_temperature_cities2018) + "." + "\n" + "The cities with highest temperatures in 2018 are: " + ", ".join(
+            highest_temperature_cities2018) + "."
+    elif arguement == "low":
+        return "The cities with lowest temperatures in 2018 are: " + ", ".join(lowest_temperature_cities2018) + "."
+    elif arguement == "high":
+        return "The cities with highest temperatures in 2018 are: " + ", ".join(highest_temperature_cities2018) + "."
+    else:
+        return "Invalid arguement. Valid arguements are High, Low or no arguement."
 

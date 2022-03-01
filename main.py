@@ -1,6 +1,7 @@
-from functions.dataset import dataset_open, dataset_split, five_cities_with_lower_temperature_middleterm_in2018
+from functions.dataset import dataset_open, dataset_split, five_highestorlowest_temperature_cities_in2018
 from functions.display import display_row_with_titles
 
+print("Loading...\n\n\n")
 
 dataset = dataset_open()
 data = dataset_split(dataset)
@@ -13,4 +14,5 @@ data = dataset_split(dataset)
 # display_row_with_titles(data)
 
 
-print(five_cities_with_lower_temperature_middleterm_in2018())
+
+print(five_highestorlowest_temperature_cities_in2018("hIgH"))
