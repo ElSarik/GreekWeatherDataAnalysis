@@ -53,12 +53,11 @@ def middleterm(arg):
 
 
 def five_highestorlowest_temperature_cities_in2018(arguement="none"):
-
     # task #3. Να βρείτε τις 5 πόλεις/χωριά με τον υψηλότερο και χαμηλότερο μέσο όρο θερμοκρασιών για το 2018
 
     global cleaned_data
 
-    arguement = arguement.lower() # making arguement case insensitive
+    arguement = arguement.lower()  # making arguement case insensitive
 
     #   filtering data
     data_in2018 = []
@@ -135,10 +134,8 @@ def five_highestorlowest_temperature_cities_in2018(arguement="none"):
         var = high_temp_dictionary[key]
         high_temp_dictionary[key] = middleterm(var)
 
-
     lowest_temperature_cities2018 = []
     highest_temperature_cities2018 = []
-
 
     #   appending lowest and highest 5 temperature cities in list.
     for i in range(5):  # doing a loop 5 times
@@ -159,3 +156,60 @@ def five_highestorlowest_temperature_cities_in2018(arguement="none"):
     else:
         return "Invalid arguement. Valid arguements are High, Low or no arguement."
 
+
+#   ----------------------------- task 4 ---------------------------------------
+
+def middleterm_of_place_in_2006_and_2018(region):
+    #
+    global cleaned_data
+    regions = ['Ήπειρος', 'Θεσσαλία', 'Θράκη', 'Κρήτη', 'Μακεδονία', 'Ν. Αιγαίου', 'Ν. Ιονίου', 'Πελοπόννησος',
+               'Στερεά Ελλάδα']
+
+    n = 2006
+
+    if region not in regions:
+        return "Arguement must be a greek region!"
+
+    region_data_2018 = {}
+    region_data_nyear = {}
+
+    for i in cleaned_data:  # creating a dictionary with each regions city as key and empty list as value
+        if i[1] == region and i[3] == '2018':
+            region_data_2018[i[2]] = []
+    for i in cleaned_data:
+        if i[1] == region and i[3] == str(n):
+            region_data_nyear[i[2]] = []
+
+    for i in cleaned_data:
+        if i[1] == region and i[3] == "2018":  # similarly to task 3
+            var = region_data_2018[i[2]]
+            var.append(i[6])
+            region_data_2018[i[2]] = var
+        if i[1] == region and i[3] == str(n):  # using n variable (default is 2006) in case of making changes to it
+            # later
+            var2 = region_data_nyear[i[2]]
+            var2.append(i[6])
+            region_data_nyear[i[2]] = var2
+
+    for i in region_data_2018:  # turning list values into a single decimal temperature (middle term)
+        var4 = region_data_2018[i]
+        var4 = middleterm(var4)
+        region_data_2018[i] = var4
+
+    for i in region_data_nyear:  # --- || ----
+        var3 = region_data_nyear[i]
+        var3 = middleterm(var3)
+        region_data_nyear[i] = var3
+
+    for i in region_data_2018:  # printing 2018 citiy and temp, n year and temp, and their difference, according to which year is hotter.
+        if i in region_data_nyear:
+            if region_data_2018[i] > region_data_nyear[i]: # if else because we dont want any negative numbers.
+                print("2018 " + str(i) +" temperature is: "+ str(region_data_2018[i]) + ". Temperature in " + str(n) + " is: " + str(region_data_nyear[i])  + ". " + i + " was hotter in 2018 by " + str(region_data_2018[i] - region_data_nyear[i]) + " degrees celcius."        )
+            elif region_data_2018[i] < region_data_nyear[i]:
+                print("2018 " + str(i) +" temperature is: "+ str(region_data_2018[i]) + ". Temperature in " + str(n) + " is: " + str(region_data_nyear[i])  + ". " + i + " was hotter in " + str(n) + " by " + str(region_data_nyear[i] - region_data_2018[i]) + " degrees celcius."        )
+            elif region_data_2018[i] == region_data_nyear[i]:  # siga mhn einai me tosa dekadika xaxa
+                print("2018 " + str(i) + " temperature is: " + str(region_data_2018[i]) + ". Temperature in " + str(n) + " is: " + str(region_data_nyear[i]) + ". " + "The temperature in those 2 years is excactly the same!")
+        else:  # insufficient data case
+            print("The temperature of " + str(i) + " in 2018 is: " + str(region_data_2018[i]) + ". Insufficient data for " + str(n) + " ."     )
+
+    return ""
