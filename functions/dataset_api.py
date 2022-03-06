@@ -9,7 +9,7 @@ def get_column_names ():
     return cleaned_data[0]
 
 
-def get_data_by_header_list(headers: 'list'):
+def get_data_by_header_list(headers: 'list', start: int = 1, end: int = 0):
     '''Retrieves all data within the columns listed inside the input list,
        
        arg: list of column names (ex. ['Year', 'Day']),
@@ -21,7 +21,7 @@ def get_data_by_header_list(headers: 'list'):
     data_based_on_headers = []
 
     for header_index in header_indexes:
-        data_by_index = get_data_by_column_index(header_index)
+        data_by_index = get_data_by_column_index(header_index, start, end)
 
         data_based_on_headers.append(data_by_index)
     
