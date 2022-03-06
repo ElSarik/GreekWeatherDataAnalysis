@@ -81,9 +81,9 @@ def get_data_by_column_index(index: int, start: int = 1, end: int = 0):
     
        ex. index = 3 => returning all data of column 'YEAR' as a list,
 
-       args: column index as an integer, 
-             starting row as an integer (default: first row, starting index: 1),
-             final row as an integer (default: last row)
+       args: column index as integer, 
+             starting row as integer (default: first row, starting index: 1),
+             final row as integer (default: last row)
        
        returns the data inside the indexed column as a list.'''
     
@@ -99,3 +99,39 @@ def get_data_by_column_index(index: int, start: int = 1, end: int = 0):
         column_data.append(cleaned_data[row][index])
 
     return column_data
+
+
+def get_data_by_row(index: int):
+    '''Extracts all data of the indexed row and returns them as a list,
+    
+       ex. index = 3 => returning all data of row 3 as a list,
+
+       arg: row index as an integer, 
+       
+       returns the data inside the indexed row as a list.'''
+
+    cleaned_data = get_cleaned_data()
+
+    row_data = cleaned_data[index]
+
+    return row_data
+
+
+def find_in_row_by_header(row: int, column_header: list):
+    '''Retrieves the value which corresponds to the indexed row and column header,
+    
+       ex. row = 3,
+           column_header = 'YEAR' => returns the value of column 'YEAR' in row 3,
+
+       arg: row index as an integer, 
+            column_header as a list
+
+       returns the value corresponding to the indexed row and column header as a string.'''
+
+    row_data = get_data_by_row(row)
+
+    column_indices = header_title_to_header_index(column_header)
+
+    for index in column_indices:
+        row_header_value = row_data[index]
+        return row_header_value
