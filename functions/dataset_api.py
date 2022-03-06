@@ -93,3 +93,34 @@ def get_data_by_column_index(index: int):
         column_data.append(cleaned_data[row][index])
 
     return column_data
+
+    '''Calculates and prints the highest temperature of every year,
+    
+       no-arg (default): Calculates between the lowest and the highest available year,
+       arg1 (optional): lower boundary year as integer,
+       arg2 (optional): upper boundary year as integer,
+       
+       prints the highest recorded temperature for each year.'''
+
+    header_list = ['YEAR', 'HIGH_TEMP']
+    data = get_data_by_header_list(header_list)
+
+    highest_temp = 0
+
+    for year in range(year_min, year_max + 1):
+        for row in range(1, len(data)):
+            temperature = data[row][1]
+
+            try:
+                temperature = float(temperature)
+            except:
+                continue
+
+            if data[row][0] == str(year):
+                if temperature > highest_temp:
+                    highest_temp = temperature
+
+                highest_temp_of_year = highest_temp
+
+        highest_temp = 0
+        print('The highest temperature recorded in ' + str(year) + ' had a value of ' + str(highest_temp_of_year))
