@@ -94,6 +94,27 @@ def get_data_by_column_index(index: int):
 
     return column_data
 
+
+def get_highest_lowest_year(year_boundary: str = 'MAX'):
+    '''Finds the maximum or the minimum available year in the dataset and returns that year,
+    
+       arg: string of value either 'MAX' or 'MIN',
+       
+       returns either the minimum or the maximum year.'''
+
+    header_list = ['YEAR']
+    data = get_data_by_header_list(header_list)
+
+    data.sort()
+
+    if year_boundary == 'MIN':
+        return data[0]
+    else:
+        return data[-2]
+
+
+# Task5 solution ~ @konspapp
+def get_highest_temperature_by_year(year_min: int = 2006, year_max: int = 2018):
     '''Calculates and prints the highest temperature of every year,
     
        no-arg (default): Calculates between the lowest and the highest available year,
