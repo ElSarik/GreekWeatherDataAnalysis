@@ -1,5 +1,5 @@
 from functions.dataset import dataset_open, dataset_split, get_cleaned_data
-from functions.dataset_api import get_data_by_header_list, get_highest_temperature_by_year
+from functions.dataset_api import get_data_by_header_list, get_highest_temperature_by_year, get_highest_amount_of_rain
 from functions.display import display_row_with_titles
 
 dataset = dataset_open()
@@ -23,6 +23,8 @@ data = dataset_split(dataset)
 get_highest_temperature_by_year(2008, 2010)
 print("=====================")
 get_highest_temperature_by_year()
+print("=====================")
+get_highest_amount_of_rain()
 
 # data = get_cleaned_data()
 # for row in range(0, 10):

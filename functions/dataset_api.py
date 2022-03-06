@@ -145,3 +145,28 @@ def get_highest_temperature_by_year(year_min: int = 2006, year_max: int = 2018):
 
         highest_temp = 0
         print('The highest temperature recorded in ' + str(year) + ' had a value of ' + str(highest_temp_of_year))
+
+
+# Task6 solution ~ @konspapp
+def get_highest_amount_of_rain():
+    '''Calculates and displays the region with the highest amount of rain.'''
+
+    header_list = ['STATION_REGION', 'STATION_NAME', 'YEAR', 'MONTH', 'DAY', 'RAIN']
+    data = get_data_by_header_list(header_list)
+
+    max_rain = 0
+
+    for row in range(1, len(data)):
+        rain = data[row][5]
+
+        try:
+            rain = float(rain)
+
+        except:
+            continue
+
+        if rain > max_rain:
+            max_rain = rain
+            result = [data[row][0], data[row][1], data[row][2], data[row][3], data[row][4], data[row][5], ]
+
+    print(result)
