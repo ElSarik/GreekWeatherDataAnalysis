@@ -93,3 +93,80 @@ def get_data_by_column_index(index: int):
         column_data.append(cleaned_data[row][index])
 
     return column_data
+
+
+def get_highest_lowest_year(year_boundary: str = 'MAX'):
+    '''Finds the maximum or the minimum available year in the dataset and returns that year,
+    
+       arg: string of value either 'MAX' or 'MIN',
+       
+       returns either the minimum or the maximum year.'''
+
+    header_list = ['YEAR']
+    data = get_data_by_header_list(header_list)
+
+    data.sort()
+
+    if year_boundary == 'MIN':
+        return data[0]
+    else:
+        return data[-2]
+
+
+# Task5 solution ~ @konspapp
+def get_highest_temperature_by_year(year_min: int = 2006, year_max: int = 2018):
+    '''Calculates and prints the highest temperature of every year,
+    
+       no-arg (default): Calculates between the lowest and the highest available year,
+       arg1 (optional): lower boundary year as integer,
+       arg2 (optional): upper boundary year as integer,
+       
+       prints the highest recorded temperature for each year.'''
+
+    header_list = ['YEAR', 'HIGH_TEMP']
+    data = get_data_by_header_list(header_list)
+
+    highest_temp = 0
+
+    for year in range(year_min, year_max + 1):
+        for row in range(1, len(data)):
+            temperature = data[row][1]
+
+            try:
+                temperature = float(temperature)
+            except:
+                continue
+
+            if data[row][0] == str(year):
+                if temperature > highest_temp:
+                    highest_temp = temperature
+
+                highest_temp_of_year = highest_temp
+
+        highest_temp = 0
+        print('The highest temperature recorded in ' + str(year) + ' had a value of ' + str(highest_temp_of_year))
+
+
+# Task6 solution ~ @konspapp
+def get_highest_amount_of_rain():
+    '''Calculates and displays the region with the highest amount of rain.'''
+
+    header_list = ['STATION_REGION', 'STATION_NAME', 'YEAR', 'MONTH', 'DAY', 'RAIN']
+    data = get_data_by_header_list(header_list)
+
+    max_rain = 0
+
+    for row in range(1, len(data)):
+        rain = data[row][5]
+
+        try:
+            rain = float(rain)
+
+        except:
+            continue
+
+        if rain > max_rain:
+            max_rain = rain
+            result = [data[row][0], data[row][1], data[row][2], data[row][3], data[row][4], data[row][5], ]
+
+    print(result)
