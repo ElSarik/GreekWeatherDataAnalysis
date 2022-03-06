@@ -76,12 +76,14 @@ def header_title_to_header_index(headers: list):
     return header_indexes
 
 
-def get_data_by_column_index(index: int):
+def get_data_by_column_index(index: int, start: int = 1, end: int = 0):
     '''Extracts all data of the indexed column and returns them as a list,
     
        ex. index = 3 => returning all data of column 'YEAR' as a list,
 
-       arg: column index as an integer,
+       args: column index as an integer, 
+             starting row as an integer (default: first row, starting index: 1),
+             final row as an integer (default: last row)
        
        returns the data inside the indexed column as a list.'''
     
@@ -89,7 +91,11 @@ def get_data_by_column_index(index: int):
 
     column_data = []
 
-    for row in range(len(cleaned_data)):
+    if end == 0:
+        # deliberately exclude last row from looping since it is empty
+        end = len(cleaned_data)
+
+    for row in range(start - 1, end):
         column_data.append(cleaned_data[row][index])
 
     return column_data
