@@ -9,7 +9,7 @@ def get_column_names ():
     return cleaned_data[0]
 
 
-def get_data_by_header_list(headers: 'list'):
+def get_data_by_header_list(headers: 'list', start: int = 1, end: int = 0):
     '''Retrieves all data within the columns listed inside the input list,
        
        arg: list of column names (ex. ['Year', 'Day']),
@@ -21,7 +21,7 @@ def get_data_by_header_list(headers: 'list'):
     data_based_on_headers = []
 
     for header_index in header_indexes:
-        data_by_index = get_data_by_column_index(header_index)
+        data_by_index = get_data_by_column_index(header_index, start, end)
 
         data_based_on_headers.append(data_by_index)
     
@@ -76,12 +76,14 @@ def header_title_to_header_index(headers: list):
     return header_indexes
 
 
-def get_data_by_column_index(index: int):
+def get_data_by_column_index(index: int, start: int = 1, end: int = 0):
     '''Extracts all data of the indexed column and returns them as a list,
     
        ex. index = 3 => returning all data of column 'YEAR' as a list,
 
-       arg: column index as an integer,
+       args: column index as integer, 
+             starting row as integer (default: first row, starting index: 1),
+             final row as integer (default: last row)
        
        returns the data inside the indexed column as a list.'''
     
@@ -89,11 +91,51 @@ def get_data_by_column_index(index: int):
 
     column_data = []
 
-    for row in range(len(cleaned_data)):
+    if end == 0:
+        # deliberately exclude last row from looping since it is empty
+        end = len(cleaned_data)
+
+    for row in range(start - 1, end):
         column_data.append(cleaned_data[row][index])
 
     return column_data
 
+
+
+def get_data_by_row(index: int):
+    '''Extracts all data of the indexed row and returns them as a list,
+    
+       ex. index = 3 => returning all data of row 3 as a list,
+
+       arg: row index as an integer, 
+       
+       returns the data inside the indexed row as a list.'''
+
+    cleaned_data = get_cleaned_data()
+
+    row_data = cleaned_data[index]
+
+    return row_data
+
+
+def find_in_row_by_header(row: int, column_header: list):
+    '''Retrieves the value which corresponds to the indexed row and column header,
+    
+       ex. row = 3,
+           column_header = 'YEAR' => returns the value of column 'YEAR' in row 3,
+
+       arg: row index as an integer, 
+            column_header as a list
+
+       returns the value corresponding to the indexed row and column header as a string.'''
+
+    row_data = get_data_by_row(row)
+
+    column_indices = header_title_to_header_index(column_header)
+
+    for index in column_indices:
+        row_header_value = row_data[index]
+        return row_header_value
 
 def get_highest_lowest_year(year_boundary: str = 'MAX'):
     '''Finds the maximum or the minimum available year in the dataset and returns that year,
@@ -347,3 +389,4 @@ def middleterm_of_place_in_2006_and_2018(region):
             print("The temperature of " + str(i) + " in 2018 is: " + str(region_data_2018[i]) + ". Insufficient data for " + str(n) + " ."     )
 
     return ""
+
