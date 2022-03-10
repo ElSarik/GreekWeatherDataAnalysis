@@ -1,25 +1,18 @@
-from functions.dataset import dataset_open, dataset_split, get_cleaned_data
-from functions.dataset_api import get_data_by_header_list
-from functions.display import display_row_with_titles
+from functions.dataset import dataset_open, dataset_split
+from functions.dataset_api import get_highest_temperature_by_year, get_highest_amount_of_rain
+from functions.dataset_api import five_highestorlowest_temperature_cities_in2018, middleterm_of_place_in_2006_and_2018
 
 dataset = dataset_open()
 data = dataset_split(dataset)
 
-###### Optional alternative print using 2nd argument (shows empty fields).
-# indexes = [92, 93]
-# display_row_with_titles(data, indexes)
-
-###### Prints with first line of data - without 2nd argument.
-# display_row_with_titles(data)
 
 
-# data = get_cleaned_data()
-# print(data)
-
-header_list = ['YeAr', 'HiGh_tEmP']
-
-data = get_data_by_header_list(header_list)
-
-# data = get_cleaned_data()
-for row in range(0, 10):
-    print(data[row])
+get_highest_temperature_by_year(2008, 2010)              #task 3
+print("=====================")
+get_highest_temperature_by_year()                        #task 3
+print("=====================")
+get_highest_amount_of_rain()                             #task 4
+print("=====================")
+print(five_highestorlowest_temperature_cities_in2018())  #task 5
+print("=====================")
+print(middleterm_of_place_in_2006_and_2018('Μακεδονία')) #task 6
