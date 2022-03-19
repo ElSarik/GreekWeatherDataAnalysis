@@ -16,3 +16,5 @@ print("=====================")
 print(five_highestorlowest_temperature_cities_in2018())  #task 5
 print("=====================")
 print(middleterm_of_place_in_2006_and_2018('Μακεδονία')) #task 6
+print("=====================")
+print(middleterm_of_place_in_2006_and_2018("Ν. Αιγαίου"))
