@@ -1,0 +1,8 @@
+greek_weather_data.csv
+
+description.txt
+
+__pychache__/
+functions/__pycache__
+
+.idea
