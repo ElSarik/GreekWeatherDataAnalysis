@@ -53,25 +53,29 @@ def middleterm(arg):
 
 
 def five_highestorlowest_temperature_cities_in2018(arguement="none"):
-    # task #3. Να βρείτε τις 5 πόλεις/χωριά με τον υψηλότερο και χαμηλότερο μέσο όρο θερμοκρασιών για το 2018
+
+    # Takes High, low , or none as argument and returns the 5 cities with lowest/highest temperature average in 2018
 
     global cleaned_data
 
-    arguement = arguement.lower()  # making arguement case insensitive
+    arguement = arguement.lower()  # making argument case-insensitive
 
     #   filtering data
+
     data_in2018 = []
     # year_index = getindex("STATION NAME")
+
     for i in cleaned_data:
         #
         if i[3] == "2018":
             data_in2018.append(i)
         else:
             continue
-    #   data_in2018 now has CSV rows only from year 2018
 
-    #   headers NOT included in data_in2018!!!!!
+    #   data_in2018 now has CSV rows only from year 2018
+    #   headers NOT included in data_in2018!
     #   creating a list with all cities once
+
     cities = []
     for i in data_in2018:
         if i[2] not in cities:
@@ -80,9 +84,6 @@ def five_highestorlowest_temperature_cities_in2018(arguement="none"):
     high_temp_dictionary = {}
     low_temp_dictionary = {}
 
-    # min temp == index 9
-    # high temp == index 7
-
     for i in cities:
         low_temp_dictionary[i] = []
 
@@ -90,10 +91,6 @@ def five_highestorlowest_temperature_cities_in2018(arguement="none"):
         high_temp_dictionary[i] = []
     #   {'Αγία Κυριακή Ιωαννίνων': [], 'Άρτα': []...
 
-    # ----------------------------------------------------------------------------------------------------
-    # ----------------------------------------------------------------------------------------------------
-    # ----------------------------------------------------------------------------------------------------
-    # ----------------------------------------------------------------------------------------------------
     for key in low_temp_dictionary:
         # creating variable as already existing key's value, appending in var the items we need and then putting var
         # back in key as value
@@ -124,10 +121,7 @@ def five_highestorlowest_temperature_cities_in2018(arguement="none"):
 
     # lowmiddleterm and highermiddleterm dictionaries now have all low temperetures in a list as value for every key (
     # city).
-    # ----------------------------------------------------------------------------------------------------
-    # ----------------------------------------------------------------------------------------------------
-    # ----------------------------------------------------------------------------------------------------
-    # ----------------------------------------------------------------------------------------------------
+
     #   finding middle term of each value and putting it as the new value in dictionary, using same logic as above.
 
     for key in high_temp_dictionary:
@@ -138,13 +132,13 @@ def five_highestorlowest_temperature_cities_in2018(arguement="none"):
     highest_temperature_cities2018 = []
 
     #   appending lowest and highest 5 temperature cities in list.
-    for i in range(5):  # doing a loop 5 times
+    for i in range(5):
         lowest_temperature_cities2018.append(min(low_temp_dictionary))
         low_temp_dictionary.pop(min(low_temp_dictionary))
         highest_temperature_cities2018.append(max(high_temp_dictionary))
         high_temp_dictionary.pop(max(high_temp_dictionary))
 
-    #   returning data acording to users arguement
+    #   returning data according to users arguement
     if arguement == "none":
         return "The cities with lowest temperatures in 2018 are:  " + ", ".join(
             lowest_temperature_cities2018) + "." + "\n" + "The cities with highest temperatures in 2018 are: " + ", ".join(
@@ -160,15 +154,20 @@ def five_highestorlowest_temperature_cities_in2018(arguement="none"):
 #   ----------------------------- task 4 ---------------------------------------
 
 def middleterm_of_place_in_2006_and_2018(region):
-    #
+
+    # Takes a greek region as arguement and compares the average temperature in 2018 with average temperature in
+    # N-year, N based on which year has most data to compare.
+    # e.g. middleterm_of_place_in_2006_and_2018('Θράκη)
+    #  returns In Θράκη ,  2018 had excactly the same temperature as 2017
+
     global cleaned_data
     regions = ['Ήπειρος', 'Θεσσαλία', 'Θράκη', 'Κρήτη', 'Μακεδονία', 'Ν. Αιγαίου', 'Ν. Ιονίου', 'Πελοπόννησος',
                'Στερεά Ελλάδα']
 
-    n = 2006
+    n = 2006   # default n year
 
-    if region not in regions:
-        return "Arguement must be a greek region!"
+    if region not in regions:  # validation
+        return "Arguement must be a greek region, case sensitive!"
 
     region_data_2018 = {}
     region_data_nyear = {}
@@ -176,40 +175,84 @@ def middleterm_of_place_in_2006_and_2018(region):
     for i in cleaned_data:  # creating a dictionary with each regions city as key and empty list as value
         if i[1] == region and i[3] == '2018':
             region_data_2018[i[2]] = []
+
+    year_and_data_lengths = {}  # finding what year has most data
+    for i in range(2006, 2018):
+        year_and_data_lengths[i] = []
+
+    for year in range(2006, 2018):
+        for row in cleaned_data:
+            if row[1] == region and row[3] == str(year):
+                var = year_and_data_lengths[year]
+                if row[2] not in year_and_data_lengths[year]:  # in each year/key, each city must be only once
+                    var.append(row[2])
+                year_and_data_lengths[year] = var
+
+    for key in year_and_data_lengths: # finding which year has most cities as value / most data
+        year_and_data_lengths[key] = len(year_and_data_lengths[key])
+
+    n = max(year_and_data_lengths)  # according to task, we compare 2018 to year with most data / with max
+    # year_and_data_lengths
+
     for i in cleaned_data:
         if i[1] == region and i[3] == str(n):
             region_data_nyear[i[2]] = []
 
+    # data in 2018
+    data_in_2018 = []
     for i in cleaned_data:
-        if i[1] == region and i[3] == "2018":  # similarly to task 3
-            var = region_data_2018[i[2]]
-            var.append(i[6])
-            region_data_2018[i[2]] = var
-        if i[1] == region and i[3] == str(n):  # using n variable (default is 2006) in case of making changes to it
-            # later
-            var2 = region_data_nyear[i[2]]
-            var2.append(i[6])
-            region_data_nyear[i[2]] = var2
+        if i[3] == '2018':
+            data_in_2018.append(i)
 
-    for i in region_data_2018:  # turning list values into a single decimal temperature (middle term)
-        var4 = region_data_2018[i]
-        var4 = middleterm(var4)
-        region_data_2018[i] = var4
+    data_in_nyear = []
+    for i in cleaned_data:
+        if i[3] == '2018':
+            data_in_nyear.append(i)
 
-    for i in region_data_nyear:  # --- || ----
-        var3 = region_data_nyear[i]
-        var3 = middleterm(var3)
-        region_data_nyear[i] = var3
+    for key in region_data_2018:  # in region_data_2018 appending each MEAN_TEMP as value in list for each city in
+        # region.
+        for row in data_in_2018:
+            if row[2] == key:
+                var = region_data_2018[key]
+                var.append(row[6])  # appending in value the mean temp
+                region_data_2018[key] = var
 
-    for i in region_data_2018:  # printing 2018 citiy and temp, n year and temp, and their difference, according to which year is hotter.
-        if i in region_data_nyear:
-            if region_data_2018[i] > region_data_nyear[i]: # if else because we dont want any negative numbers.
-                print("2018 " + str(i) +" temperature is: "+ str(region_data_2018[i]) + ". Temperature in " + str(n) + " is: " + str(region_data_nyear[i])  + ". " + i + " was hotter in 2018 by " + str(region_data_2018[i] - region_data_nyear[i]) + " degrees celcius."        )
-            elif region_data_2018[i] < region_data_nyear[i]:
-                print("2018 " + str(i) +" temperature is: "+ str(region_data_2018[i]) + ". Temperature in " + str(n) + " is: " + str(region_data_nyear[i])  + ". " + i + " was hotter in " + str(n) + " by " + str(region_data_nyear[i] - region_data_2018[i]) + " degrees celcius."        )
-            elif region_data_2018[i] == region_data_nyear[i]:  # siga mhn einai me tosa dekadika xaxa
-                print("2018 " + str(i) + " temperature is: " + str(region_data_2018[i]) + ". Temperature in " + str(n) + " is: " + str(region_data_nyear[i]) + ". " + "The temperature in those 2 years is excactly the same!")
-        else:  # insufficient data case
-            print("The temperature of " + str(i) + " in 2018 is: " + str(region_data_2018[i]) + ". Insufficient data for " + str(n) + " ."     )
+    # for nyear
+    for key in region_data_nyear:  # in region_data_2018 appending each MEAN_TEMP as value in list for each city
+        # in region.
+        for row in data_in_nyear:
+            if row[2] == key:
+                var = region_data_nyear[key]
+                var.append(row[6])  # appending in value the mean temp
+                region_data_nyear[key] = var
 
-    return ""
+    for key in region_data_2018:  # value = middle term([MEANS_TEMPS])
+        var = region_data_2018[key]
+        region_data_2018[key] = middleterm(var)
+    for key in region_data_nyear:
+        var = region_data_nyear[key]
+        try:  # there are some empty lists, try except because we will get zero division error in middle term function
+            region_data_nyear[key] = middleterm(var)
+        except:
+            continue
+
+    region_2018_tempslist = []
+    region_nyear_tempslist = []
+
+    for i in region_data_2018:
+        region_2018_tempslist.append(region_data_2018[i])
+    for i in region_data_nyear:
+        region_nyear_tempslist.append(region_data_nyear[i])
+
+    final_temperature_middle_term_2018 = round(middleterm(region_2018_tempslist), 2)  # middle term of temperatures
+    # list, rounding to 2 decimals
+    final_temperature_middle_term_nyear = round(middleterm(region_nyear_tempslist), 2)
+
+    if final_temperature_middle_term_2018 > final_temperature_middle_term_nyear:
+        return "In " + str(region) + ", 2018 was hotter than " + str(n) + " by " + str(
+            round((final_temperature_middle_term_2018 - final_temperature_middle_term_nyear), 2)) + " degrees celcius."
+    elif final_temperature_middle_term_2018 < final_temperature_middle_term_nyear:
+        return "In " + str(region) + " , " + str(n) + " was hotter than 2018" + " by " + str(
+            round((final_temperature_middle_term_nyear - final_temperature_middle_term_2018), 2)) + " degrees celcius."
+    elif final_temperature_middle_term_2018 == final_temperature_middle_term_nyear:
+        return "In " + str(region) + " , " + "2018 had excactly the same temperature as " + str(n)
