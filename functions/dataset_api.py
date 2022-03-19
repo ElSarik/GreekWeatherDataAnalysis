@@ -212,7 +212,7 @@ def get_highest_amount_of_rain():
             max_rain = rain
             result = [data[row][0], data[row][1], data[row][2], data[row][3], data[row][4], data[row][5], ]
 
-    print(result)
+    print(f'{result[1]} station in {result[0]} had the highest amount of rain ({result[5]}) on {result[4]}/{result[3]}/{result[2]}')
 
 
 #    -------------vandl's work-----------------------------------------------------------------------------#
